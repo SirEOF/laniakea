@@ -44,7 +44,7 @@ aws_secret_access_key = &lt;your_secret_key&gt;
 <p>Complement the provided <strong>images.json</strong> file with your AWS AMI information.</p>
 
 <pre><code>"default": {
-    "image_id":"ami-&lt;AMI_ID&gt;",
+  "image_id":"ami-&lt;AMI_ID&gt;",
   "instance_type": "&lt;INSTANCE_TYPE",
   "security_groups": ["laniakea"],
   "key_name": "&lt;AWS_KEY_NAME&gt;"
@@ -59,10 +59,24 @@ In the likely case that you want to use a custom UserData script rather than mod
 <h3>
 <a id="basic-usage-examples" class="anchor" href="#basic-usage-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic Usage Examples</h3>
 
-<pre><code>% ./laniakea.py -create-spot -tags Name=peach -image-name ec2-spot -userdata userdata/peach.private.sh
-% ./laniakea.py -create-on-demand -tags Name=peach -userdata userdata/peach.private.sh
-% ./laniakea.py -status -only tag:Name=peach instance-state-code=16
-% ./laniakea.py -terminate -only tag:Name=peach
+<p>Run N on-demand instances with a custom -userdata script</p>
+
+<pre><code>% ./laniakea.py -create-on-demand -tags Name=fuzzer -userdata userdata/peach.private.sh
+</code></pre>
+
+<p>Run N spot instances with a custom -userdata script and a -max-spot-price of $0.05</p>
+
+<pre><code>% ./laniakea.py -create-spot -tags Name=fuzzer -image-name ec2-spot -userdata userdata/peach.private.sh -image-args count=10
+</code></pre>
+
+<p>Show which instances are running and are tagged with the name 'fuzzer'</p>
+
+<pre><code>% ./laniakea.py -status -only tag:Name=fuzzer instance-state-code=16
+</code></pre>
+
+<p>Terminate all running instances which are tagged with the name 'fuzzer'</p>
+
+<pre><code>% ./laniakea.py -terminate -only tag:Name=fuzzer
 </code></pre>
 
 <h3>
