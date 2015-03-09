@@ -1,83 +1,162 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
     <title>Laniakea by MozillaSecurity</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
-
   <body>
-    <header>
-      <div class="inner">
-        <h1>Laniakea</h1>
-        <h2>Laniakea is a utility for managing EC2 instances at AWS and aids in setting up a fuzzing cluster.</h2>
-        <a href="https://github.com/MozillaSecurity/laniakea" class="button"><small>View project on</small> GitHub</a>
-      </div>
-    </header>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/MozillaSecurity/laniakea">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/MozillaSecurity/laniakea/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/MozillaSecurity/laniakea/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h3>
-<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+    <div class="wrapper">
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+      <section>
+        <div id="title">
+          <h1>Laniakea</h1>
+          <p>Laniakea is a utility for managing EC2 instances at AWS and aids in setting up a fuzzing cluster.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/MozillaSecurity">MozillaSecurity</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+        <h1>
+<a id="laniakea" class="anchor" href="#laniakea" aria-hidden="true"><span class="octicon octicon-link"></span></a>Laniakea</h1>
+
+<p><img src="http://people.mozilla.com/%7Ecdiehl/img/galaxy.jpg" alt=""></p>
+
+<h4>
+<a id="setup" class="anchor" href="#setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup</h4>
+
+<pre><code>Python 2.x or Python 3.x
+pip install -r requirements.txt
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<p>Add your AWS credentials to a custom profile inside your ~/.boto configuration file.</p>
 
-<h3>
-<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<pre><code>[profile laniakea]
+aws_access_key_id = &lt;your_access_key_id&gt;
+aws_secret_access_key = &lt;your_secret_key&gt;
+</code></pre>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p>Edit images.json with your AWS AMI data.</p>
 
-<h3>
-<a id="rather-drive-stick" class="anchor" href="#rather-drive-stick" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<pre><code>"default": {
+    "image_id":"ami-&lt;AMI_ID&gt;",
+    "instance_type": "&lt;INSTANCE_TYPE",
+    "security_groups": ["laniakea"],
+    "key_name": "&lt;AWS_KEY_NAME&gt;"
+}
+</code></pre>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p>Add your user-data script - which is going to be used for provisioning your EC2 instances - to "userdata/".
+If you add a custom user-script rather than modifying "default.sh" then provide the path to that script to the "-userdata" parameter.</p>
 
-<h3>
-<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<h4>
+<a id="basic-usage" class="anchor" href="#basic-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic Usage</h4>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<pre><code>% ./laniakea.py -create-on-demand -tags Name=peach
+% ./laniakea.py -create-spot -tags Name=peach -image-name ec2-spot -userdata userdata/peach.private.sh
+% ./laniakea.py -status -only tag:Name=peach
+% ./laniakea.py -terminate -only tag:Name=peach
+</code></pre>
 
-<h3>
-<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<h4>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h4>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="https://help.github.com/pages">https://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-        </section>
+<pre><code>% ./laniakea.py -create-on-demand -tags Name=peach -userdata userdata/peach.private.sh
+[Laniakea] 2015-01-05 00:17:15 INFO: Using image definition "default" from images.json.
+[Laniakea] 2015-01-05 00:17:15 INFO: Adding user data script content from userdata/peach.private.sh.
+[Laniakea] 2015-01-05 00:17:15 INFO: Using Boto configuration profile "laniakea".
+[Laniakea] 2015-01-05 00:17:40 INFO: i-7332e57d is running at ec2-54-149-44-1.us-west-2.compute.amazonaws.com (54.149.44.1)
+[Laniakea] 2015-01-05 00:17:40 INFO: i-7132e57f is running at ec2-54-149-43-14.us-west-2.compute.amazonaws.com (54.149.43.14)
+[Laniakea] 2015-01-05 00:17:40 INFO: i-7c32e572 is running at ec2-54-149-113-86.us-west-2.compute.amazonaws.com (54.149.113.86)
+[Laniakea] 2015-01-05 00:17:41 INFO: i-7432e57a is running at ec2-54-149-10-175.us-west-2.compute.amazonaws.com (54.149.10.175)
+[Laniakea] 2015-01-05 00:17:41 INFO: i-7232e57c is running at ec2-54-149-43-154.us-west-2.compute.amazonaws.com (54.149.43.154)
+[Laniakea] 2015-01-05 00:17:41 INFO: i-7d32e573 is running at ec2-54-149-77-74.us-west-2.compute.amazonaws.com (54.149.77.74)
+[Laniakea] 2015-01-05 00:17:41 INFO: i-7732e579 is running at ec2-54-68-133-104.us-west-2.compute.amazonaws.com (54.68.133.104)
+[Laniakea] 2015-01-05 00:17:41 INFO: i-7632e578 is running at ec2-54-149-111-110.us-west-2.compute.amazonaws.com (54.149.111.110)
+[Laniakea] 2015-01-05 00:17:41 INFO: i-7032e57e is running at ec2-54-149-93-26.us-west-2.compute.amazonaws.com (54.149.93.26)
+[Laniakea] 2015-01-05 00:17:41 INFO: i-7532e57b is running at ec2-54-149-38-127.us-west-2.compute.amazonaws.com (54.149.38.127)
 
-        <aside id="sidebar">
-          <a href="https://github.com/MozillaSecurity/laniakea/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/MozillaSecurity/laniakea/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
+% ./laniakea.py -status -only tag:Name=peach instance-state-code=16
+[Laniakea] 2015-01-05 00:34:57 INFO: Using image definition "default" from images.json.
+[Laniakea] 2015-01-05 00:34:57 INFO: Adding user data script content from userdata/default.sh.
+[Laniakea] 2015-01-05 00:34:57 INFO: Using Boto configuration profile "laniakea".
+[Laniakea] 2015-01-05 00:35:01 INFO: i-e536e1eb is running at 54.149.155.103 - tags: {u'Name': u'peach'}
+[Laniakea] 2015-01-05 00:35:01 INFO: i-bd35e2b3 is running at 54.149.216.72 - tags: {u'Name': u'peach'}
+[Laniakea] 2015-01-05 00:35:01 INFO: i-ee36e1e0 is running at 54.149.226.196 - tags: {u'Name': u'peach'}
+[Laniakea] 2015-01-05 00:35:01 INFO: i-0534e30b is running at 54.149.106.23 - tags: {u'Name': u'peach'}
+[Laniakea] 2015-01-05 00:35:01 INFO: i-2735e229 is running at 54.149.112.81 - tags: {u'Name': u'peach'}
+[Laniakea] 2015-01-05 00:35:01 INFO: i-aa35e2a4 is running at 54.149.121.174 - tags: {u'Name': u'peach'}
+[Laniakea] 2015-01-05 00:35:01 INFO: i-2a35e224 is running at 54.149.95.195 - tags: {u'Name': u'peach'}
+[Laniakea] 2015-01-05 00:35:01 INFO: i-a534e3ab is running at 54.149.212.119 - tags: {u'Name': u'peach'}
+[Laniakea] 2015-01-05 00:35:01 INFO: i-9e33e490 is running at 54.68.1.19 - tags: {u'Name': u'peach'}
+[Laniakea] 2015-01-05 00:35:01 INFO: i-5336e15d is running at 54.68.17.140 - tags: {u'Name': u'peach'}
+</code></pre>
 
-          <p class="repo-owner"><a href="https://github.com/MozillaSecurity/laniakea"></a> is maintained by <a href="https://github.com/MozillaSecurity">MozillaSecurity</a>.</p>
+<h4>
+<a id="help-menu" class="anchor" href="#help-menu" aria-hidden="true"><span class="octicon octicon-link"></span></a>Help Menu</h4>
 
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
+<pre><code>usage: ./laniakea.py
+                     (-create-on-demand | -create-spot | -stop | -terminate | -status)
+                     [-userdata path] [-list-userdata-macros]
+                     [-userdata-macros k=v [k=v ...]] [-tags k=v [k=v ...]]
+                     [-only k=v [k=v ...]] [-image-name str] [-images path]
+                     [-profile str] [-max-spot-price #]
+                     [-verbosity {1,2,3,4,5}]
+
+Laniakea Runtime
+
+Mandatory Arguments:
+  -create-on-demand     Create on-demand instances (default: False)
+  -create-spot          Create spot instances (default: False)
+  -stop                 Stop active instances (default: False)
+  -terminate            Terminate active instances (default: False)
+  -status               List current state of instances (default: False)
+
+UserData Arguments:
+  -userdata path        UserData script for cloud-init (default:
+                        userdata/default.sh)
+  -list-userdata-macros
+                        List available macros (default: False)
+  -userdata-macros k=v [k=v ...]
+                        Set custom macros (default: None)
+
+Optional Arguments:
+  -tags k=v [k=v ...]   Assign tags to instances (default: None)
+  -only k=v [k=v ...]   Filter instances (default: None)
+  -image-name str       Name of image definition (default: default)
+  -images path          EC2 image definitions (default: images.json)
+  -profile str          AWS profile name in .boto (default: laniakea)
+  -max-spot-price #     Max price for spot instances (default: 0.05)
+  -verbosity {1,2,3,4,5}
+                        Log level for the logging module (default: 2)
+
+The exit status is 0 for non-failures and 1 for failures.
+</code></pre>
+      </section>
+
     </div>
-
-  
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
   </body>
 </html>
