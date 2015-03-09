@@ -28,11 +28,10 @@
     <div id="content-wrapper">
       <div class="inner clearfix">
         <section id="main-content">
-          <h4>
-<a id="setup" class="anchor" href="#setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup</h4>
+          <h3>
+<a id="setup" class="anchor" href="#setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup</h3>
 
-<pre><code>Python 2.x or Python 3.x
-pip install -r requirements.txt
+<pre><code>pip install -r requirements.txt
 </code></pre>
 
 <p>Add your AWS credentials to a custom profile inside your ~/.boto configuration file.</p>
@@ -42,21 +41,23 @@ aws_access_key_id = &lt;your_access_key_id&gt;
 aws_secret_access_key = &lt;your_secret_key&gt;
 </code></pre>
 
-<p>Edit images.json with your AWS AMI data.</p>
+<p>Complement the provided <strong>images.json</strong> file with your AWS AMI information.</p>
 
 <pre><code>"default": {
     "image_id":"ami-&lt;AMI_ID&gt;",
-    "instance_type": "&lt;INSTANCE_TYPE",
-    "security_groups": ["laniakea"],
-    "key_name": "&lt;AWS_KEY_NAME&gt;"
+  "instance_type": "&lt;INSTANCE_TYPE",
+  "security_groups": ["laniakea"],
+  "key_name": "&lt;AWS_KEY_NAME&gt;"
 }
 </code></pre>
 
-<p>Add your user-data script - which is going to be used for provisioning your EC2 instances - to "userdata/".
-If you add a custom user-script rather than modifying "default.sh" then provide the path to that script to the "-userdata" parameter.</p>
+<p>Add your UserData script - which is going to be used for provisioning your EC2 instances - to the "userdata/" folder.</p>
 
-<h4>
-<a id="basic-usage" class="anchor" href="#basic-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic Usage</h4>
+<p><strong>NOTE</strong>
+In the likely case that you want to use a custom UserData script rather than modifying the "default.sh" file, then you need to point the "-userdata" parameter to that file.</p>
+
+<h3>
+<a id="basic-usage-examples" class="anchor" href="#basic-usage-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic Usage Examples</h3>
 
 <pre><code>% ./laniakea.py -create-spot -tags Name=peach -image-name ec2-spot -userdata userdata/peach.private.sh
 % ./laniakea.py -create-on-demand -tags Name=peach -userdata userdata/peach.private.sh
@@ -64,8 +65,8 @@ If you add a custom user-script rather than modifying "default.sh" then provide 
 % ./laniakea.py -terminate -only tag:Name=peach
 </code></pre>
 
-<h4>
-<a id="help-menu" class="anchor" href="#help-menu" aria-hidden="true"><span class="octicon octicon-link"></span></a>Help Menu</h4>
+<h3>
+<a id="help-menu" class="anchor" href="#help-menu" aria-hidden="true"><span class="octicon octicon-link"></span></a>Help Menu</h3>
 
 <pre><code>usage: ./laniakea.py
                      (-create-on-demand | -create-spot | -stop [n] | -terminate [n] | -status)
