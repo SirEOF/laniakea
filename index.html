@@ -45,7 +45,7 @@ aws_secret_access_key = &lt;your_secret_key&gt;
 
 <pre><code>"default": {
   "image_id":"ami-&lt;AMI_ID&gt;",
-  "instance_type": "&lt;INSTANCE_TYPE",
+  "instance_type": "&lt;INSTANCE_TYPE&gt;",
   "security_groups": ["laniakea"],
   "key_name": "&lt;AWS_KEY_NAME&gt;"
 }
@@ -55,6 +55,8 @@ aws_secret_access_key = &lt;your_secret_key&gt;
 
 <p><strong>NOTE</strong>
 In the likely case that you want to use a custom UserData script rather than modifying the "default.sh" file, then you need to point the "-userdata" parameter to that file.</p>
+
+<p>Please refer to <a href="https://help.ubuntu.com/community/CloudInit">https://help.ubuntu.com/community/CloudInit</a> to learn more about UserData scripts.</p>
 
 <h3>
 <a id="basic-usage-examples" class="anchor" href="#basic-usage-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic Usage Examples</h3>
@@ -83,12 +85,12 @@ In the likely case that you want to use a custom UserData script rather than mod
 <a id="help-menu" class="anchor" href="#help-menu" aria-hidden="true"><span class="octicon octicon-link"></span></a>Help Menu</h3>
 
 <pre><code>usage: ./laniakea.py
-                     (-create-on-demand | -create-spot | -stop [n] | -terminate [n] | -status)
-                     [-userdata path] [-list-userdata-macros]
-                     [-userdata-macros k=v [k=v ...]] [-tags k=v [k=v ...]]
-                     [-only k=v [k=v ...]] [-images path] [-image-name str]
-                     [-image-args k=v [k=v ...]] [-profile str]
-                     [-max-spot-price #] [-verbosity {1,2,3,4,5}]
+     (-create-on-demand | -create-spot | -stop [n] | -terminate [n] | -status)
+     [-userdata path] [-list-userdata-macros]
+     [-userdata-macros k=v [k=v ...]] [-tags k=v [k=v ...]]
+     [-only k=v [k=v ...]] [-images path] [-image-name str]
+     [-image-args k=v [k=v ...]] [-profile str]
+     [-max-spot-price #] [-verbosity {1,2,3,4,5}]
 
 Laniakea Runtime
 
