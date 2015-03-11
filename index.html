@@ -43,11 +43,23 @@ aws_secret_access_key = &lt;your_secret_key&gt;
 
 <p>Complement the provided <strong>images.json</strong> file with your AWS AMI information.</p>
 
-<pre><code>"default": {
+<pre><code># Example: an on-demand instance
+"default": {
   "image_id":"ami-&lt;AMI_ID&gt;",
   "instance_type": "&lt;INSTANCE_TYPE&gt;",
   "security_groups": ["laniakea"],
-  "key_name": "&lt;AWS_KEY_NAME&gt;"
+  "key_name": "&lt;AWS_KEY_NAME&gt;",
+  "min_count": 3,
+  "max_count": 3
+}
+
+# Example: a spot instance
+"peach": {
+  "image_id":"ami-&lt;AMI_ID&gt;",
+  "instance_type": "&lt;INSTANCE_TYPE&gt;",
+  "security_groups": ["laniakea"],
+  "key_name": "&lt;AWS_KEY_NAME&gt;",
+  "count": 3
 }
 </code></pre>
 
@@ -68,7 +80,7 @@ In the likely case that you want to use a custom UserData script rather than mod
 
 <p>Run N spot instances with a custom -userdata script and a -max-spot-price of $0.05</p>
 
-<pre><code>% ./laniakea.py -create-spot -tags Name=fuzzer -image-name ec2-spot -userdata userdata/peach.private.sh -image-args count=10
+<pre><code>% ./laniakea.py -create-spot -tags Name=fuzzer -image-name peach -userdata userdata/peach.private.sh -image-args count=10
 </code></pre>
 
 <p>Show which instances are running and are tagged with the name 'fuzzer'</p>
