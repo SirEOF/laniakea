@@ -88,6 +88,8 @@ In the likely case that you want to use a custom UserData script rather than mod
 <pre><code>% ./laniakea.py -status -only tag:Name=peach instance-state-code=16
 </code></pre>
 
+<p><strong>Hint</strong> Filters support wildcards. Example: "tag:Name=peach-*" would be suitable to list all instances having the  word "peach" as prefix of a tag name.</p>
+
 <p>Terminate all running instances which are tagged with the name 'peach'</p>
 
 <pre><code>% ./laniakea.py -terminate -only tag:Name=peach
