@@ -104,6 +104,17 @@ In the likely case that you want to use a custom UserData script rather than mod
 </code></pre>
 
 <h3>
+<a id="userdata-reference" class="anchor" href="#userdata-reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>UserData Reference</h3>
+
+<p>Laniakea supports various macros to construct and maintain user-data files.</p>
+
+<pre><code>@import(path_to_other_userdata_file)@
+@macro_name@
+</code></pre>
+
+<p>You can use the "-list-userdata-macros" option to print out available macros inside a user-data file. Each of these macros can then be substituted with the -userdata-macros option.</p>
+
+<h3>
 <a id="help-menu" class="anchor" href="#help-menu" aria-hidden="true"><span class="octicon octicon-link"></span></a>Help Menu</h3>
 
 <pre><code>usage: ./laniakea.py
