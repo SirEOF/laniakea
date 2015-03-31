@@ -1,34 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
+    <meta charset="UTF-8">
     <title>Laniakea by MozillaSecurity</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
-
   <body>
-    <header>
-      <div class="inner">
-        <h1>Laniakea</h1>
-        <h2>Laniakea is a utility for managing EC2 instances at AWS and aids in setting up a fuzzing cluster.</h2>
-        <a href="https://github.com/MozillaSecurity/laniakea" class="button"><small>View project on</small> GitHub</a>
-      </div>
-    </header>
+    <section class="page-header">
+      <h1 class="project-name">Laniakea</h1>
+      <h2 class="project-tagline">Laniakea is a utility for managing EC2 instances at AWS and aids in setting up a fuzzing cluster.</h2>
+      <a href="https://github.com/MozillaSecurity/laniakea" class="btn">View on GitHub</a>
+      <a href="https://github.com/MozillaSecurity/laniakea/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/MozillaSecurity/laniakea/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h3>
+    <section class="main-content">
+      <p><a href="https://travis-ci.org/MozillaSecurity/laniakea"><img src="https://api.travis-ci.org/MozillaSecurity/laniakea.svg" alt="Build 
+Status"></a></p>
+
+<h3>
 <a id="setup" class="anchor" href="#setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup</h3>
 
 <pre><code>pip install -r requirements.txt
@@ -88,7 +82,7 @@ In the likely case that you want to use a custom UserData script rather than mod
 <pre><code>% ./laniakea.py -status -only tag:Name=peach instance-state-code=16
 </code></pre>
 
-<p><strong>Hint</strong> Filters support wildcards. Example: "tag:Name=peach-*" would be suitable to list all instances having the  word "peach" as prefix of a tag name.</p>
+<p><strong>Hint</strong> Filters support wildcards. Example: "tag:Name=peach-*" would be suitable to list all instances having the  word "peach" as prefix of a tag name. For a list of available filters refer to <a href="http://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/ApiReference-cmd-DescribeInstances.html">http://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/ApiReference-cmd-DescribeInstances.html</a></p>
 
 <p>Terminate all running instances which are tagged with the name 'peach'</p>
 
@@ -120,12 +114,13 @@ In the likely case that you want to use a custom UserData script rather than mod
 <a id="help-menu" class="anchor" href="#help-menu" aria-hidden="true"><span class="octicon octicon-link"></span></a>Help Menu</h3>
 
 <pre><code>usage: ./laniakea.py
-     (-create-on-demand | -create-spot | -stop [n] | -terminate [n] | -status)
-     [-userdata path] [-list-userdata-macros]
-     [-userdata-macros k=v [k=v ...]] [-tags k=v [k=v ...]]
-     [-only k=v [k=v ...]] [-images path] [-image-name str]
-     [-image-args k=v [k=v ...]] [-profile str]
-     [-max-spot-price #] [-verbosity {1,2,3,4,5}]
+   (-create-on-demand | -create-spot | -stop [n] | -terminate [n] | -status | -run cmd | -list-userdata-macros)
+   [-userdata path] [-userdata-macros k=v [k=v ...]]
+   [-tags k=v [k=v ...]] [-only k=v [k=v ...]]
+   [-images path] [-image-name str]
+   [-image-args k=v [k=v ...]] [-profile str]
+   [-max-spot-price #] [-region REGION] [-zone ZONE]
+   [-verbosity {1,2,3,4,5}] [-settings path]
 
 Laniakea Runtime
 
@@ -135,12 +130,13 @@ Mandatory Arguments:
   -stop [n]             Stop active instances (default: None)
   -terminate [n]        Terminate active instances (default: None)
   -status               List current state of instances (default: False)
+  -run cmd              Execute commands via SSH (default: )
+  -list-userdata-macros
+                        List available macros (default: False)
 
 UserData Arguments:
   -userdata path        UserData script for cloud-init (default:
                         userdata/default.sh)
-  -list-userdata-macros
-                        List available macros (default: False)
   -userdata-macros k=v [k=v ...]
                         Custom macros (default: None)
 
@@ -153,31 +149,24 @@ Optional Arguments:
                         Custom image arguments (default: None)
   -profile str          AWS profile name in .boto (default: laniakea)
   -max-spot-price #     Max price for spot instances (default: 0.05)
-  -region str           EC2 region (default: us-west-2)
+  -region REGION        EC2 region (default: us-west-2)
+  -zone ZONE            EC2 placement zone (default: None)
   -verbosity {1,2,3,4,5}
                         Log level for the logging module (default: 2)
+  -settings path        Laniakea settings (default: laniakea.json)
 
 The exit status is 0 for non-failures and 1 for failures.
 </code></pre>
-        </section>
 
-        <aside id="sidebar">
-          <a href="https://github.com/MozillaSecurity/laniakea/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/MozillaSecurity/laniakea/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/MozillaSecurity/laniakea">Laniakea</a> is maintained by <a href="https://github.com/MozillaSecurity">MozillaSecurity</a>.</span>
 
-          <p class="repo-owner"><a href="https://github.com/MozillaSecurity/laniakea"></a> is maintained by <a href="https://github.com/MozillaSecurity">MozillaSecurity</a>.</p>
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
 
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
-    </div>
+    </section>
 
   
   </body>
 </html>
+
