@@ -69,34 +69,39 @@ In the likely case that you want to use a custom UserData script rather than mod
 
 <p>Run N on-demand instances with a custom -userdata script</p>
 
-<pre><code>% ./laniakea.py -create-on-demand -tags Name=peach -userdata userdata/peach.private.sh
+<pre><code>./laniakea.py -create-on-demand -tags Name=peach -userdata userdata/peach.private.sh
 </code></pre>
 
 <p>Run N spot instances with a custom -userdata script and a -max-spot-price of $0.05</p>
 
-<pre><code>% ./laniakea.py -create-spot -tags Name=peach -image-name peach -userdata userdata/peach.private.sh -image-args count=10
+<pre><code>./laniakea.py -create-spot -tags Name=peach -image-name peach -userdata userdata/peach.private.sh -image-args count=10
 </code></pre>
 
 <p>Show which instances are running and are tagged with the name 'peach'</p>
 
-<pre><code>% ./laniakea.py -status -only tag:Name=peach instance-state-code=16
+<pre><code>./laniakea.py -status -only tag:Name=peach instance-state-code=16
 </code></pre>
 
 <p><strong>Hint</strong> Filters support wildcards. Example: "tag:Name=peach-*" would be suitable to list all instances having the  word "peach" as prefix of a tag name. For a list of available filters refer to <a href="http://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/ApiReference-cmd-DescribeInstances.html">http://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/ApiReference-cmd-DescribeInstances.html</a></p>
 
 <p>Terminate all running instances which are tagged with the name 'peach'</p>
 
-<pre><code>% ./laniakea.py -terminate -only tag:Name=peach
+<pre><code>./laniakea.py -terminate -only tag:Name=peach
 </code></pre>
 
 <p>Scale down and terminate the oldest N running instances</p>
 
-<pre><code>% ./laniakea.py -terminate N -only tag:Name=peach
+<pre><code>./laniakea.py -terminate N -only tag:Name=peach
 </code></pre>
 
 <p>Terminate a specific instance by id</p>
 
-<pre><code>% ./laniakea.py -status -only tag:Name=peach instance-id=i-9110fa9e
+<pre><code>./laniakea.py -status -only tag:Name=peach instance-id=i-9110fa9e
+</code></pre>
+
+<p>List available macros in a UserData script</p>
+
+<pre><code>./laniakea.py -list-userdata-macros -userdata userdata/peach.pit.sh
 </code></pre>
 
 <h3>
